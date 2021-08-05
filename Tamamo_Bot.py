@@ -1,46 +1,48 @@
 import os
-
+import random
 import discord
-from dotenv import load_dotenv
 
-load_dotenv()
+from discord.ext import commands
+
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
-# class CustomClient(discord.Client):
-#     async def on_ready(self):
-#         print(f'{self.user} has connected to Discord!')
-#         
-# client = CustomClient()
+bot = commands.Bot(command_prefix='!')
 
-client = discord.Client()
-
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user.name} has connected to Discord!')
-
-@client.event
-async def on_member_join(member):
-    await member.create_dm()
-    await member.dm_channel.send(
-        f'Greetings, {member.name}, welcome to our Discord server!'
-    )
+    print(f'I, {bot.user.name} have connected to Discord!')
     
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content == "!mikon":
-        await message.channel.send("Mikon~!")
-    elif message.content == 'raise-exception':
-        raise discord.DiscordException
+@bot.command(name='mikon', help='Responds with a Tamamo quote.')
+async def mikon(ctx):
+    tamamo_quotes = [
+        'Mikon!', 'Tamamo KIIIIICK!',    
+    ]
     
-@client.event
-async def on_error(event, *args, **kwargs):
-    with open('err.log', 'a') as f:
-        if even == 'on_message':
-            f.write(f'Unhandled message: {args[0]}\n')
-        else:
-            raise
+    response = random.choice(tamamo_quotes)
+    await ctx.send(response)
+    
+@bot.command(name='roll', help='Simulates rolling dice.')
+async def diceRoll(ctx, number_of_dice: int, number_of_sides: int):
+    dice=[
+     str(random.choice(range(1, number_of_sides + 1)))
+     for _ in range(number_of_dice)
+    ]
+    await ctx.send(', '.join(dice))
+    
+@bot.command(name='create-channel')
+@commands.has_role('Admin')
+async def create_channel(ctx, channel_name='default-channel'):
+    guild = ctx.guild
+    existing_channel = discord.utils.get(guild.channels, name=channel_name)
+    if not existing_channel:
+        print(f'Creating a new channel: {channel_name}')
+        await guild.create_text_channel(channel_name)
+    else:
+        print(f'Failed to create channel!')
 
-          
-client.run(TOKEN)
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.errors.CheckFailure):
+        await ctx.send('You do not have the correct role for this command.')
+
+bot.run(TOKEN)
