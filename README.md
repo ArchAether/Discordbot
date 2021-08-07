@@ -6,7 +6,10 @@ On startup, the bot will send a message to the Announcements channel. Whenever a
 
 # Commands
 All commands for this bot start with `!`
-`!help` A generic help command, displays a list of commands a user may use
-`!mikon` A command that has the bot respond with a random quote
-`!roll` Takes in two arguments `number_of_dice` and `number_of_sides` and simulates a dice roll with those numbers
-`!create-channel` Takes in one argument `channel_name` and creates a channel with that name
+
+|Command|Argument|Description|
+| --- | --- | --- |
+|`!help`|`command_name`|A generic help command, displays a list of commands a user may use. Offers more details if you include a command name|
+|`!mikon`|none| A command that has the bot respond with a random quote|
+|`!roll`|`number_of_dice`, `number_of_sides`| Takes in two arguments `number_of_dice` and `number_of_sides` and simulates a dice roll with those numbers|
+|`!create-channel`|`channel_name`| Takes in one argument `channel_name` and creates a channel with that name|
