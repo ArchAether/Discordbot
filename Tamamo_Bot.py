@@ -2,15 +2,32 @@ import os
 import random
 import discord
 
+from dotenv import load_dotenv
 from discord.ext import commands
 
-TOKEN = os.getenv('DISCORD_TOKEN')
+load_dotenv()
+
+TOKEN = os.environ.get('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='!')
 
 @bot.event
 async def on_ready():
     print(f'I, {bot.user.name} have connected to Discord!')
+    channel = bot.get_channel(808479275538710578)
+    text = 'React to this message to get a role~!\n'\
+           '⚔️: Hunter'
+    watched_message = await channel.send(text)
+    
+    
+@bot.event
+async def on_reaction_add(reaction, user):
+    channel = bot.get_channel(808479275538710578)
+    if reaction.emoji == '⚔️':
+        role = discord.utils.get(user.guild.roles, name="Hunter")
+        print(f'Setting {user.name} as a Hunter!')
+        await user.add_roles(role)
+        
     
 @bot.command(name='mikon', help='Responds with a Tamamo quote.')
 async def mikon(ctx):
