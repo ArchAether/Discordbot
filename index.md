@@ -1,37 +1,17 @@
-## Welcome to GitHub Pages
+# Discordbot
+A Discord bot created in Python
 
-You can use the [editor on GitHub](https://github.com/ArchAether/Discordbot/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Startup
+On startup, the bot will send a message to the Announcements channel. Whenever a user reacts the the message with a specific emoji, the bot will give that user a role, depending on what emoji they reacted with.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# Commands
+All commands for this bot start with `!`
 
-### Markdown
+|Command|Argument|Description|
+| --- | --- | --- |
+|`!help`|`command_name`|A generic help command, displays a list of commands a user may use. Offers more details if you include a command name|
+|`!mikon`|none| A command that has the bot respond with a random quote|
+|`!roll`|`number_of_dice`, `number_of_sides`| Takes in two arguments `number_of_dice` and `number_of_sides` and simulates a dice roll with those numbers|
+|`!create-channel`|`channel_name`| Takes in one argument `channel_name` and creates a channel with that name|
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ArchAether/Discordbot/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+[Back to the homepage](https://archaether.github.io/)
