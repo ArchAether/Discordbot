@@ -1,9 +1,9 @@
-import os
-import random
-import discord
+import os, random, discord, asyncio
+
+from datetime import date, datetime
 
 from dotenv import load_dotenv
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 load_dotenv()
 
@@ -61,5 +61,20 @@ async def create_channel(ctx, channel_name='default-channel'):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send('You do not have the correct role for this command.')
+
+@tasks.loop(hours=24)
+async def called_once_a_day():
+    message_channel = bot.get_channel(808492405518893097)
+    await message_channel.sent("This is a timed Message~!")
+
+@called_once_a_day.before_loop
+async def before():
+    now = datetime.now()
+    if(now.weekday() == 3):
+        asyncio.sleep(datetime.time(8, 15) - now.time())
+        await bot.wait_until_ready()
+    else:
+        print(f'No message today!')
+
 
 bot.run(TOKEN)
