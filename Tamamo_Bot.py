@@ -71,10 +71,15 @@ async def called_once_a_day():
 async def before():
     now = datetime.now()
     if(now.weekday() == 3):
-        asyncio.sleep(datetime.time(8, 15) - now.time())
+        meeting_time = datetime.now().replace(hour=20, minute=29)
+        now = datetime.now()
+        time_till_meeting = meeting_time - now
+        print(f'Time \'till meeting: {time_till_meeting}')
+        asyncio.sleep(time_till_meeting)
+
         await bot.wait_until_ready()
     else:
-        print(f'No message today!')
+        print(f'No meeting today!')
 
 
 bot.run(TOKEN)
