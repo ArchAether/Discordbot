@@ -63,11 +63,11 @@ async def on_command_error(ctx, error):
         await ctx.send('You do not have the correct role for this command.')
 
 @tasks.loop(hours=24)
-async def called_once_a_day():
+async def meeting_reminder():
     message_channel = bot.get_channel(808492405518893097)
-    await message_channel.sent("This is a timed Message~!")
+    await message_channel.sent("Meeting at 8:30!")
 
-@called_once_a_day.before_loop
+@meeting_reminder.before_loop
 async def before():
     now = datetime.now()
     if(now.weekday() == 3):
@@ -81,5 +81,5 @@ async def before():
     else:
         print(f'No meeting today!')
 
-
+meeting_reminder.start()
 bot.run(TOKEN)
