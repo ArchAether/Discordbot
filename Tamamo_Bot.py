@@ -1,6 +1,6 @@
 import os, random, discord, asyncio
 
-from datetime import date, datetime
+from datetime import time, datetime
 
 from dotenv import load_dotenv
 from discord.ext import commands, tasks
@@ -70,7 +70,7 @@ async def meeting_reminder():
 @meeting_reminder.before_loop
 async def before():
     now = datetime.now()
-    if(now.weekday() == 3):
+    if(now.weekday() == 3 and now.time() < time(20, 30, 0, 0)):
         meeting_time = datetime.now().replace(hour=20, minute=29, second=0, microsecond=0)
         now = datetime.now()
         time_till_meeting = meeting_time - now
