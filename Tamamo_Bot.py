@@ -71,11 +71,12 @@ async def meeting_reminder():
 async def before():
     now = datetime.now()
     if(now.weekday() == 3):
-        meeting_time = datetime.now().replace(hour=20, minute=29)
+        meeting_time = datetime.now().replace(hour=20, minute=29, second=0, microsecond=0)
         now = datetime.now()
         time_till_meeting = meeting_time - now
         print(f'Time \'till meeting: {time_till_meeting}')
-        await asyncio.sleep(time_till_meeting)
+        
+        await asyncio.sleep(time_till_meeting.seconds)
 
         await bot.wait_until_ready()
     else:
