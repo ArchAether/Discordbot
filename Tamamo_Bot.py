@@ -65,10 +65,6 @@ async def on_command_error(ctx, error):
 @tasks.loop(hours=24)
 async def meeting_reminder():
     message_channel = bot.get_channel(808492405518893097)
-    await message_channel.send("Meeting at 8:30!")
-
-@meeting_reminder.before_loop
-async def before():
     now = datetime.now()
     if(now.weekday() == 3 and now.time() < time(20, 30, 0, 0)):
         meeting_time = datetime.now().replace(hour=20, minute=29, second=0, microsecond=0)
@@ -77,10 +73,13 @@ async def before():
         print(f'Time \'till meeting: {time_till_meeting}')
         
         await asyncio.sleep(time_till_meeting.seconds)
-
-        await bot.wait_until_ready()
+        await message_channel.send("Meeting at 8:30!")
     else:
         print(f'No meeting today!')
 
+@meeting_reminder.before_loop
+async def before():
+        await bot.wait_until_ready()
+    
 meeting_reminder.start()
 bot.run(TOKEN)
