@@ -25,7 +25,8 @@ async def on_reaction_add(reaction, user):
     channel = bot.get_channel(808479275538710578)
     if reaction.emoji == '⚔️':
         role = discord.utils.get(user.guild.roles, name="Hunter")
-        print(f'Setting {user.name} as a Hunter!')
+        now = datetime.now().strftime("%A %B %d, %Y %H:%M %p")
+        print(f'{now} :Setting {user.name} as a Hunter!')
         await user.add_roles(role)
         
     
@@ -62,7 +63,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send('You do not have the correct role for this command.')
 
-@tasks.loop(hours=24)
+@tasks.loop(hours=12)
 async def meeting_reminder():
     message_channel = bot.get_channel(808492405518893097)
     now = datetime.now()
@@ -75,7 +76,8 @@ async def meeting_reminder():
         await asyncio.sleep(time_till_meeting.seconds)
         await message_channel.send("Meeting at 8:30!")
     else:
-        print(f'No meeting today!')
+        time_now = datetime.now().strftime("%A %B %d, %Y %H:%M %p")
+        print(f'{time_now}: No meeting yet!')
 
 @meeting_reminder.before_loop
 async def before():
